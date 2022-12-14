@@ -1,8 +1,7 @@
-import json
-from django.shortcuts import render
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import models
+import json
 
 from .models import Stock
 
@@ -11,7 +10,6 @@ from .models import Stock
 def place_orders(request):
     if request.method == "POST":
         request_data = json.loads(request.body)
-        print(request_data)
         stock = request_data.get("stock", "")
         quantity = request_data.get("quantity", "")
         price = request_data.get("price", "")
