@@ -34,10 +34,15 @@ def place_orders(request):
     return JsonResponse({"error": ""}, status=400)
 
 
-def get_total_value(request):
-    stocks = Stock.objects.annotate(
-        total_price=models.F("price") * models.F("quantity")
-    )
+def get_total_value(request, id=0):
+    if not id:
+        stocks = Stock.objects.annotate(
+            total_price=models.F("price") * models.F("quantity")
+        )
+    else:
+        stocks = Stock.objects.filter(id=id).annotate(
+            total_price=models.F("price") * models.F("quantity")
+        )
 
     total_value = 0
     for stock in stocks:
